@@ -2,7 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://taskpilot-backend-production-4dbb.up.railway.app",
   headers: {
     "Content-Type": "application/json",
   },
