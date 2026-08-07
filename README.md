@@ -1,16 +1,148 @@
-# React + Vite
+# 🎨 TaskPilot AI - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive React application for **TaskPilot AI**, an AI-powered task management system.
 
-Currently, two official plugins are available:
+The frontend provides an intuitive interface for authentication, task management, and AI-powered task interactions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+# ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔐 User Login & Registration
+- 📋 Task Dashboard
+- ➕ Create Tasks
+- ✏️ Edit Tasks
+- ✅ Complete Tasks
+- 🗑️ Delete Tasks
+- 🔍 Search & Filter Tasks
+- 🤖 AI Chat Interface
+- 📱 Responsive Design
+- ⚡ Fast React + Vite Application
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 🛠️ Tech Stack
+
+- React
+- Vite
+- JavaScript
+- Axios
+- CSS
+- React Hooks
+
+---
+
+# 📁 Project Structure
+
+```
+src
+├── assets
+├── components
+├── pages
+├── services
+├── styles
+├── App.jsx
+└── main.jsx
+```
+
+---
+
+# 📷 Screenshots
+
+## 🔐 Login
+
+(Add Screenshot)
+
+---
+
+## 📊 Dashboard
+
+(Add Screenshot)
+
+---
+
+## 🤖 AI Chat
+
+(Add Screenshot)
+
+---
+
+## 📋 Task List
+
+(Add Screenshot)
+
+---
+
+# 🔗 Backend API
+
+The frontend communicates with the Spring Boot backend using REST APIs.
+
+Example:
+
+```
+POST /auth/login
+
+GET /tasks
+
+POST /tasks
+
+PUT /tasks/{id}
+
+DELETE /tasks/{id}
+
+POST /ai/chat
+```
+
+---
+
+# ⚙️ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/akhileshwebdev/taskpilot-ui.git
+```
+
+Go to project
+
+```bash
+cd taskpilot-ui
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run
+
+```bash
+npm run dev
+```
+
+---
+
+# 🚀 Future Improvements
+
+- Dark Mode
+- Drag & Drop Tasks
+- Calendar View
+- Push Notifications
+- Voice Commands
+- Mobile Application
+- Real-time Updates
+
+---
+
+# 👨‍💻 Author
+
+**Akhilesh B**
+
+GitHub
+
+https://github.com/akhileshwebdev
+
+---
+
+⭐ If you like this project, give it a star!
