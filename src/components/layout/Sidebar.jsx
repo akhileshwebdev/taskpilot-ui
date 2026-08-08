@@ -27,12 +27,19 @@ function Sidebar() {
 
     if (!container || !element) return;
 
-    container.scrollTo({
-      top: element.offsetTop - 20,
-      behavior: "smooth",
-    });
+    if (id === "dashboard-container") {
+      container.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else {
+      container.scrollTo({
+        top: element.offsetTop - 20,
+        behavior: "smooth",
+      });
+    }
 
-    // Close mobile sidebar after selecting a section
+    // Close sidebar on mobile
     setIsMobileOpen(false);
   };
 
@@ -55,21 +62,33 @@ function Sidebar() {
 
     toast.success("👋 Logged out successfully!");
 
+    setIsMobileOpen(false);
+
     navigate("/", { replace: true });
   };
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* ========================= */}
+      {/* MOBILE MENU BUTTON */}
+      {/* ========================= */}
+
       <button
         type="button"
         onClick={() => setIsMobileOpen(true)}
         className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white rounded-xl shadow-md border border-gray-200"
+        aria-label="Open menu"
       >
-        <Menu size={24} className="text-indigo-600" />
+        <Menu
+          size={24}
+          className="text-indigo-600"
+        />
       </button>
 
-      {/* Mobile Overlay */}
+      {/* ========================= */}
+      {/* MOBILE OVERLAY */}
+      {/* ========================= */}
+
       {isMobileOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/40 z-40"
@@ -77,7 +96,10 @@ function Sidebar() {
         />
       )}
 
-      {/* Sidebar */}
+      {/* ========================= */}
+      {/* SIDEBAR */}
+      {/* ========================= */}
+
       <aside
         className={`
           fixed lg:static
@@ -101,93 +123,132 @@ function Sidebar() {
           }
         `}
       >
-        {/* Mobile Close Button */}
+        {/* ========================= */}
+        {/* LOGO */}
+        {/* ========================= */}
+
         <div className="flex items-center justify-between mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-indigo-600">
             TaskPilot AI
           </h1>
 
+          {/* Mobile Close */}
           <button
             type="button"
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition"
+            aria-label="Close menu"
           >
-            <X size={22} />
+            <X size={22} className="text-gray-700" />
           </button>
         </div>
 
-        {/* Navigation */}
+        {/* ========================= */}
+        {/* NAVIGATION */}
+        {/* ========================= */}
+
         <nav className="space-y-3">
+
           {/* Dashboard */}
           <button
-            onClick={() => {
-              scrollToSection("dashboard-container");
-            }}
+            type="button"
+            onClick={() =>
+              scrollToSection("dashboard-container")
+            }
             className="flex items-center gap-3 w-full p-3 rounded-lg bg-indigo-100 text-indigo-700 font-semibold hover:bg-indigo-200 transition"
           >
             <LayoutDashboard size={20} />
+
             <span>Dashboard</span>
           </button>
 
           {/* My Tasks */}
           <button
-            onClick={() => scrollToSection("tasks")}
+            type="button"
+            onClick={() =>
+              scrollToSection("tasks")
+            }
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <CheckSquare size={20} />
+
             <span>My Tasks</span>
           </button>
 
           {/* AI Assistant */}
           <button
-            onClick={() => scrollToSection("assistant")}
+            type="button"
+            onClick={() =>
+              scrollToSection("assistant")
+            }
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Bot size={20} />
+
             <span>AI Assistant</span>
           </button>
 
           {/* Calendar */}
           <button
-            onClick={() => scrollToSection("calendar")}
+            type="button"
+            onClick={() =>
+              scrollToSection("calendar")
+            }
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Calendar size={20} />
+
             <span>Calendar</span>
           </button>
 
           {/* Analytics */}
           <button
-            onClick={() => scrollToSection("analytics")}
+            type="button"
+            onClick={() =>
+              scrollToSection("analytics")
+            }
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <BarChart3 size={20} />
+
             <span>Analytics</span>
           </button>
 
           {/* Settings */}
           <button
+            type="button"
             onClick={() => {
               toast("🚧 Settings page coming soon!");
+
               setIsMobileOpen(false);
             }}
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Settings size={20} />
+
             <span>Settings</span>
           </button>
+
         </nav>
 
-        {/* Logout */}
+        {/* ========================= */}
+        {/* LOGOUT */}
+        {/* ========================= */}
+
         <div className="mt-auto pt-8">
+
           <button
+            type="button"
             onClick={handleLogout}
-            className="flex items-center gap-3 text-red-600 hover:text-red-700 font-semibold transition"
+            className="flex items-center gap-3 w-full p-3 rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 font-semibold transition"
           >
             <LogOut size={20} />
+
             <span>Logout</span>
           </button>
+
         </div>
+
       </aside>
     </>
   );
