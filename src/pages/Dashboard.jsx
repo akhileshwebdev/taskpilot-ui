@@ -227,9 +227,9 @@ useEffect(() => {
       <Sidebar />
 
       <div
-      id="dashboard-container"
-      className="flex-1 p-8 overflow-y-auto h-screen"
-    >
+  id="dashboard-container"
+  className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto h-screen min-w-0"
+>
 
         <Header
           searchTerm={searchTerm}
@@ -250,15 +250,15 @@ useEffect(() => {
   className="mt-8 bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-500 rounded-2xl p-10 text-white shadow-xl"
 >
 
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
             Welcome Back, {currentUser?.name || "User"} 👋
           </h1>
 
-          <p className="mt-3 text-lg text-indigo-100">
+          <p className="mt-2 sm:mt-3 text-base sm:text-lg text-indigo-100">
             Stay productive with AI-powered task management.
           </p>
 
-          <p className="mt-5 text-indigo-200">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-base text-indigo-200">
             Here's your productivity overview.
           </p>
 
@@ -266,7 +266,7 @@ useEffect(() => {
 
         {/* Statistics */}
 
-        <div className="grid grid-cols-4 gap-6 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mt-6 lg:mt-10">
 
           <StatsCard
             title="Total Tasks"
@@ -296,9 +296,9 @@ useEffect(() => {
 
         {/* Tasks + AI */}
 
-        <div className="grid grid-cols-3 gap-6 mt-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 lg:mt-10 items-start">
 
-          <div id="tasks" className="col-span-2">
+          <div id="tasks" className="lg:col-span-2 min-w-0">
 
   {loading ? (
     <LoadingSkeleton />
@@ -316,7 +316,10 @@ useEffect(() => {
 
 </div>
 
-          <div id="assistant" className="h-[700px]">
+          <div
+  id="assistant"
+  className="h-[600px] lg:h-[700px] min-w-0"
+>
             <AIAssistant
               onTaskChanged={loadTasks}
               currentUser={currentUser}
@@ -327,7 +330,10 @@ useEffect(() => {
 
         {/* Analytics */}
 
-        <div id="analytics" className="grid grid-cols-3 gap-6 mt-10">
+        <div
+  id="analytics"
+  className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 lg:mt-10"
+>
 
           <div>
 
@@ -335,7 +341,7 @@ useEffect(() => {
 
           </div>
 
-          <div className="col-span-2">
+          <div className="lg:col-span-2 min-w-0">
 
             <RecentActivity tasks={tasks} />
 
@@ -345,7 +351,7 @@ useEffect(() => {
 
         {/* Calendar */}
 
-        <div id="calendar" className="mt-10">
+        <div id="calendar" className="mt-6 lg:mt-10">
 
           <CalendarCard />
 

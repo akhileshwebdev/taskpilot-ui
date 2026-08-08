@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   LayoutDashboard,
   CheckSquare,
@@ -6,30 +8,35 @@ import {
   BarChart3,
   Settings,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
-
 function Sidebar() {
-
   const navigate = useNavigate();
+
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   const scrollToSection = (id) => {
-  const container = document.getElementById("dashboard-container");
-  const element = document.getElementById(id);
+    const container = document.getElementById("dashboard-container");
+    const element = document.getElementById(id);
 
-  if (!container || !element) return;
+    if (!container || !element) return;
 
-  container.scrollTo({
-    top: element.offsetTop - 20,
-    behavior: "smooth",
-  });
-};
+    container.scrollTo({
+      top: element.offsetTop - 20,
+      behavior: "smooth",
+    });
+
+    // Close mobile sidebar after selecting a section
+    setIsMobileOpen(false);
+  };
 
   const handleLogout = async () => {
-
     const result = await Swal.fire({
       title: "Logout?",
       text: "Are you sure you want to logout?",
@@ -52,77 +59,137 @@ function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-white shadow-xl min-h-screen p-6">
-
-      <h1 className="text-3xl font-bold text-indigo-600 mb-10">
-        TaskPilot AI
-      </h1>
-
-      <nav className="space-y-3">
-
-       <button
-        onClick={() => alert("Dashboard clicked")}
-        className="flex items-center gap-3 w-full p-3 rounded-lg bg-indigo-100 text-indigo-700 font-semibold hover:bg-indigo-200 transition"
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        type="button"
+        onClick={() => setIsMobileOpen(true)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-white rounded-xl shadow-md border border-gray-200"
       >
-        <LayoutDashboard size={20} />
-        Dashboard
+        <Menu size={24} className="text-indigo-600" />
       </button>
 
-        <button
-  onClick={() => scrollToSection("tasks")}
-  className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
->
-          <CheckSquare size={20} />
-          My Tasks
-        </button>
+      {/* Mobile Overlay */}
+      {isMobileOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/40 z-40"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
 
-        <button
-  onClick={() => scrollToSection("assistant")}
-  className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
->
-          <Bot size={20} />
-          AI Assistant
-        </button>
+      {/* Sidebar */}
+      <aside
+        className={`
+          fixed lg:static
+          top-0 left-0
+          z-50
+          h-screen
+          w-72
+          bg-white
+          border-r
+          border-gray-200
+          p-6
+          flex
+          flex-col
+          transition-transform
+          duration-300
+          ease-in-out
+          ${
+            isMobileOpen
+              ? "translate-x-0"
+              : "-translate-x-full lg:translate-x-0"
+          }
+        `}
+      >
+        {/* Mobile Close Button */}
+        <div className="flex items-center justify-between mb-10">
+          <h1 className="text-2xl sm:text-3xl font-bold text-indigo-600">
+            TaskPilot AI
+          </h1>
 
-        <button
-  onClick={() => scrollToSection("calendar")}
-  className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
->
-          <Calendar size={20} />
-          Calendar
-        </button>
+          <button
+            type="button"
+            onClick={() => setIsMobileOpen(false)}
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+          >
+            <X size={22} />
+          </button>
+        </div>
 
-        <button
-  onClick={() => scrollToSection("analytics")}
-  className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
->
-          <BarChart3 size={20} />
-          Analytics
-        </button>
+        {/* Navigation */}
+        <nav className="space-y-3">
+          {/* Dashboard */}
+          <button
+            onClick={() => {
+              scrollToSection("dashboard-container");
+            }}
+            className="flex items-center gap-3 w-full p-3 rounded-lg bg-indigo-100 text-indigo-700 font-semibold hover:bg-indigo-200 transition"
+          >
+            <LayoutDashboard size={20} />
+            <span>Dashboard</span>
+          </button>
 
-        <button
-  onClick={() => toast("🚧 Settings page coming soon!")}
-  className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
->
-          <Settings size={20} />
-          Settings
-        </button>
+          {/* My Tasks */}
+          <button
+            onClick={() => scrollToSection("tasks")}
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <CheckSquare size={20} />
+            <span>My Tasks</span>
+          </button>
 
-      </nav>
+          {/* AI Assistant */}
+          <button
+            onClick={() => scrollToSection("assistant")}
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <Bot size={20} />
+            <span>AI Assistant</span>
+          </button>
 
-      <div className="mt-16">
+          {/* Calendar */}
+          <button
+            onClick={() => scrollToSection("calendar")}
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <Calendar size={20} />
+            <span>Calendar</span>
+          </button>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 text-red-600 hover:text-red-700 font-semibold"
-        >
-          <LogOut size={20} />
-          Logout
-        </button>
+          {/* Analytics */}
+          <button
+            onClick={() => scrollToSection("analytics")}
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <BarChart3 size={20} />
+            <span>Analytics</span>
+          </button>
 
-      </div>
+          {/* Settings */}
+          <button
+            onClick={() => {
+              toast("🚧 Settings page coming soon!");
+              setIsMobileOpen(false);
+            }}
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <Settings size={20} />
+            <span>Settings</span>
+          </button>
+        </nav>
 
-    </aside>
+        {/* Logout */}
+        <div className="mt-auto pt-8">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 text-red-600 hover:text-red-700 font-semibold transition"
+          >
+            <LogOut size={20} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
 
