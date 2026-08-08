@@ -7,7 +7,6 @@ import {
   Calendar,
   BarChart3,
   Settings,
-  LogOut,
   LogIn,
   Menu,
   X,
@@ -43,26 +42,16 @@ function Sidebar() {
     setIsMobileOpen(false);
   };
 
-  const handleLogin = () => {
-    localStorage.removeItem("token");
-
-    setIsMobileOpen(false);
-
-    navigate("/", {
-      replace: true,
-    });
-  };
-
-  const handleLogout = async () => {
+  const handleLogin = async () => {
     const result = await Swal.fire({
-      title: "Logout?",
-      text: "Are you sure you want to logout?",
+      title: "Go to Login?",
+      text: "You will be redirected to the login page.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Logout",
+      confirmButtonText: "Login",
       cancelButtonText: "Cancel",
       confirmButtonColor: "#4f46e5",
-      cancelButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
       reverseButtons: true,
       focusCancel: true,
     });
@@ -71,9 +60,9 @@ function Sidebar() {
 
     localStorage.removeItem("token");
 
-    toast.success("👋 Logged out successfully!");
-
     setIsMobileOpen(false);
+
+    toast.success("Redirecting to login...");
 
     navigate("/", {
       replace: true,
@@ -205,23 +194,12 @@ function Sidebar() {
           <button
             type="button"
             onClick={handleLogin}
-            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+            className="flex items-center gap-3 w-full p-3 rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 font-semibold transition"
           >
             <LogIn size={20} />
             <span>Login</span>
           </button>
         </nav>
-
-        <div className="mt-auto pt-8">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex items-center gap-3 w-full p-3 rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 font-semibold transition"
-          >
-            <LogOut size={20} />
-            <span>Logout</span>
-          </button>
-        </div>
       </aside>
     </>
   );
