@@ -8,6 +8,7 @@ import {
   BarChart3,
   Settings,
   LogOut,
+  LogIn,
   Menu,
   X,
 } from "lucide-react";
@@ -25,22 +26,31 @@ function Sidebar() {
     const container = document.getElementById("dashboard-container");
     const element = document.getElementById(id);
 
-    if (!container || !element) return;
+    if (!container) return;
 
     if (id === "dashboard-container") {
       container.scrollTo({
         top: 0,
         behavior: "smooth",
       });
-    } else {
+    } else if (element) {
       container.scrollTo({
         top: element.offsetTop - 20,
         behavior: "smooth",
       });
     }
 
-    // Close sidebar on mobile
     setIsMobileOpen(false);
+  };
+
+  const handleLogin = () => {
+    localStorage.removeItem("token");
+
+    setIsMobileOpen(false);
+
+    navigate("/", {
+      replace: true,
+    });
   };
 
   const handleLogout = async () => {
@@ -54,6 +64,7 @@ function Sidebar() {
       confirmButtonColor: "#4f46e5",
       cancelButtonColor: "#ef4444",
       reverseButtons: true,
+      focusCancel: true,
     });
 
     if (!result.isConfirmed) return;
@@ -64,15 +75,13 @@ function Sidebar() {
 
     setIsMobileOpen(false);
 
-    navigate("/", { replace: true });
+    navigate("/", {
+      replace: true,
+    });
   };
 
   return (
     <>
-      {/* ========================= */}
-      {/* MOBILE MENU BUTTON */}
-      {/* ========================= */}
-
       <button
         type="button"
         onClick={() => setIsMobileOpen(true)}
@@ -85,20 +94,12 @@ function Sidebar() {
         />
       </button>
 
-      {/* ========================= */}
-      {/* MOBILE OVERLAY */}
-      {/* ========================= */}
-
       {isMobileOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/40 z-40"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
-
-      {/* ========================= */}
-      {/* SIDEBAR */}
-      {/* ========================= */}
 
       <aside
         className={`
@@ -123,33 +124,25 @@ function Sidebar() {
           }
         `}
       >
-        {/* ========================= */}
-        {/* LOGO */}
-        {/* ========================= */}
-
         <div className="flex items-center justify-between mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-indigo-600">
             TaskPilot AI
           </h1>
 
-          {/* Mobile Close */}
           <button
             type="button"
             onClick={() => setIsMobileOpen(false)}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition"
             aria-label="Close menu"
           >
-            <X size={22} className="text-gray-700" />
+            <X
+              size={22}
+              className="text-gray-700"
+            />
           </button>
         </div>
 
-        {/* ========================= */}
-        {/* NAVIGATION */}
-        {/* ========================= */}
-
         <nav className="space-y-3">
-
-          {/* Dashboard */}
           <button
             type="button"
             onClick={() =>
@@ -158,97 +151,77 @@ function Sidebar() {
             className="flex items-center gap-3 w-full p-3 rounded-lg bg-indigo-100 text-indigo-700 font-semibold hover:bg-indigo-200 transition"
           >
             <LayoutDashboard size={20} />
-
             <span>Dashboard</span>
           </button>
 
-          {/* My Tasks */}
           <button
             type="button"
-            onClick={() =>
-              scrollToSection("tasks")
-            }
+            onClick={() => scrollToSection("tasks")}
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <CheckSquare size={20} />
-
             <span>My Tasks</span>
           </button>
 
-          {/* AI Assistant */}
           <button
             type="button"
-            onClick={() =>
-              scrollToSection("assistant")
-            }
+            onClick={() => scrollToSection("assistant")}
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Bot size={20} />
-
             <span>AI Assistant</span>
           </button>
 
-          {/* Calendar */}
           <button
             type="button"
-            onClick={() =>
-              scrollToSection("calendar")
-            }
+            onClick={() => scrollToSection("calendar")}
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Calendar size={20} />
-
             <span>Calendar</span>
           </button>
 
-          {/* Analytics */}
           <button
             type="button"
-            onClick={() =>
-              scrollToSection("analytics")
-            }
+            onClick={() => scrollToSection("analytics")}
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <BarChart3 size={20} />
-
             <span>Analytics</span>
           </button>
 
-          {/* Settings */}
           <button
             type="button"
             onClick={() => {
               toast("🚧 Settings page coming soon!");
-
               setIsMobileOpen(false);
             }}
             className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Settings size={20} />
-
             <span>Settings</span>
           </button>
 
+          <button
+            type="button"
+            onClick={handleLogin}
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <LogIn size={20} />
+            <span>Login</span>
+          </button>
         </nav>
 
-        {/* ========================= */}
-        {/* LOGOUT */}
-        {/* ========================= */}
-
         <div className="mt-auto pt-8">
-
           <button
             type="button"
             onClick={handleLogout}
             className="flex items-center gap-3 w-full p-3 rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 font-semibold transition"
           >
             <LogOut size={20} />
-
             <span>Logout</span>
           </button>
-
         </div>
-
       </aside>
     </>
   );
